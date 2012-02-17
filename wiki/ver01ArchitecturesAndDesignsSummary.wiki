@@ -30,6 +30,9 @@
 
 http://android-mvc-framework.googlecode.com/files/ver0.1%E3%82%AF%E3%83%A9%E3%82%B9%E6%A6%82%E8%A6%81.png
 
+※「Downloads」タブより，この図の原本をダウンロードできる。
+<br>
+
 この図の見方：
 
  * 図の下部で，７割ほどのエリアを占めているのが，本フレームワークのコア・ライブラリである。
