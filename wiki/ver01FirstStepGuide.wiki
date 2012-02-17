@@ -23,7 +23,7 @@ Androidアプリの開発環境をセットアップし，
 
 下記のページの手順を実行し，１時間でAndroidアプリの開発環境を構築完了する。
 
- 今から１時間で，Androidアプリの開発環境を構築し，Windows上でサンプルを動作させる手順
+ 今から１時間で，Androidアプリの開発環境を構築し，Windows上でサンプルを動作させる手順<br>
  http://d.hatena.ne.jp/language_and_engineering/20110724/p1
 
 <br>
