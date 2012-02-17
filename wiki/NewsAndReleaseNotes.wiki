@@ -15,7 +15,7 @@
 
  * Wiki上に情報を掲載。
    * [ver01ArchitecturesAndDesignsSummary 全体のクラス設計とアーキテクチャの俯瞰（ver0.1）]
- * [ver01FirstStepGuide ３ステップで完了する導入手順（ver0.1）]
+   * [ver01FirstStepGuide ３ステップで完了する導入手順（ver0.1）]
 
 
 ----
@@ -25,6 +25,10 @@
  * バージョン0.1をリリースし，本サイト上でソースコードを公開完了。
 
 
+----
+
+<br>
+<br>
 
 
 　
