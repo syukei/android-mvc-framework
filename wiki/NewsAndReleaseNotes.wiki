@@ -1,4 +1,4 @@
-#summary 新着情報の一覧。
+#summary 新着情報の一覧
 
 <br>
 
