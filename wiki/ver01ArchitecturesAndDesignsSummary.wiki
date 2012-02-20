@@ -57,7 +57,7 @@ http://android-mvc-framework.googlecode.com/files/ver0.1%E3%82%AF%E3%83%A9%E3%82
 
 クラスとしては，UIBuilderあたりが担当している。
 
-この機能の詳細については，サンプルアプリケーションを参照。
+この機能の詳細については，サンプルアプリケーションを参照。（<a href="http://code.google.com/p/android-mvc-framework/source/browse/tags/20120215_ver0.1/src/com/android_mvc/sample_project/activities/main/TopActivity.java">ここ</a>とか<a href="http://code.google.com/p/android-mvc-framework/source/browse/tags/20120215_ver0.1/src/com/android_mvc/sample_project/activities/func_db/DBListActivity.java">ここ</a>）
 
 また，この機能の試作品については，下記のページを参照。
 
@@ -68,7 +68,7 @@ http://android-mvc-framework.googlecode.com/files/ver0.1%E3%82%AF%E3%83%A9%E3%82
 
 さらにView層では，<b>レイアウトXMLの指定をする必要がない</b>。
 
-もしXMLが存在する場合，Activityのクラス名から，対応するXMLをommonActivityUtilが自動的に判断して描画する。
+もしXMLが存在する場合，Activityのクラス名から，対応するXMLをommonActivityUtilが自動的に判断して描画する。（<a href="http://code.google.com/p/android-mvc-framework/source/browse/tags/20120215_ver0.1/src/com/android_mvc/framework/activities/CommonActivityUtil.java">こいつ</a>）
 
 そのユーティリティクラスを参照するために，Activityの基底クラスの継承関係に工夫を凝らしてある。
 
@@ -80,7 +80,7 @@ http://android-mvc-framework.googlecode.com/files/ver0.1%E3%82%AF%E3%83%A9%E3%82
 <br>
 <br>
 
-次にController層であるが，コントローラクラスの導入によって，<b>画面遷移などの制御に関する情報が集約された</b>。
+次にController層であるが，コントローラクラスの導入によって，<b>画面遷移などの制御に関する情報が集約された</b>。（<a href="http://code.google.com/p/android-mvc-framework/source/browse/tags/20120215_ver0.1/src/com/android_mvc/sample_project/controller/Controller.java">こんな感じ</a>に記述）
 
 おかげで，アプリ全体の制御フローに関する記述が分散せずに，メンテナンス性やテスタビリティが向上する。
 
@@ -99,7 +99,7 @@ Androidアプリの最大の恥である「ANRダイアログ」が出ないよ�
 こういった非同期タスクをたくさん扱う必要がある場合，処理のフローが追いづらくなるが，これはタスクを逐次実行させれば問題を回避できる。
 
 図中では，AsyncTasksRunnerあたりが担当している。この
-クラスは，本フレームワークで最下層に位置する要であり，縁の下の力持ちである。
+クラスは，本フレームワークで最下層に位置する要であり，縁の下の力持ちである。（<a href="http://code.google.com/p/android-mvc-framework/source/browse/tags/20120215_ver0.1/src/com/android_mvc/framework/task/AsyncTasksRunner.java">このクラス</a>）
 
 この機能の試作品については，下記のページを参照。
 
@@ -111,7 +111,7 @@ Androidアプリの最大の恥である「ANRダイアログ」が出ないよ�
 
 このような非同期処理の枠組みがあれば，<b>HTTP通信のタスク</b>は楽々動作する。
 
-図中では，HTTPPostTaskが該当する。
+図中では，HTTPPostTaskが該当する。（<a href="http://code.google.com/p/android-mvc-framework/source/browse/tags/20120215_ver0.1/src/com/android_mvc/framework/net/HttpPostTask.java">これ</a>）
 
 この機能の試作品については，下記のページを参照。
 
@@ -129,7 +129,7 @@ SQLiteには型が少ないので，素の値をJavaで扱おうとすると非�
 
 その橋渡しをしているのが，この図のLogicalEntityとPhysicalEntityだ。
 
-詳細はサンプルアプリケーションを参照のこと。
+詳細はサンプルアプリケーションを参照のこと。（<a href="http://code.google.com/p/android-mvc-framework/source/browse/tags/20120215_ver0.1/src/com/android_mvc/sample_project/db/dao/FriendDAO.java">このソース</a>のコメントに注意）
 
 <br>
 <br>
@@ -142,7 +142,8 @@ SQLiteには型が少ないので，素の値をJavaで扱おうとすると非�
 
 これはSchemaDefinitionが担当している。
 
-詳細はサンプルアプリケーションを参照のこと。
+詳細はサンプルアプリケーションを参照のこと。（<a href="http://code.google.com/p/android-mvc-framework/source/browse/tags/20120215_ver0.1/src/com/android_mvc/sample_project/db/schema/SchemaDefinition.java">このクラス</a>）
+
 
 よくコードを追ってみると，アプリ初期化判定部分で下記のページの仕組みが応用されている事に気づくだろう。
 
