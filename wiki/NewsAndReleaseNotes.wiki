@@ -9,6 +9,16 @@
 
 ----
 
+2012/02/20 (Mon)
+
+ * ver0.1をSVN上でタグ付け完了。
+   * http://code.google.com/p/android-mvc-framework/source/browse/tags/20120215_ver0.1/
+   * このver0.1のタグ配下の各ソースコードには，今後ずっと不変のURL（permanent link）がそれぞれ割り当てられる事になる。
+   * それらのリンクを使って，[ver01ArchitecturesAndDesignsSummary 全体のクラス設計とアーキテクチャの俯瞰（ver0.1）]の解説を更新。
+
+
+----
+
 2012/02/17 (Fri)
 
  * Wiki上に情報を掲載。
