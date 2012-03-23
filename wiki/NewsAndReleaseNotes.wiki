@@ -14,7 +14,7 @@
  * バージョン0.2をリリースし，本サイト上でソースコードを公開完了。
  * ver0.2をSVN上でタグ付け完了。
    * http://code.google.com/p/android-mvc-framework/source/browse/tags/20120323_ver0.2/
-
+   * [ver02FeaturesSummary ver0.2の特徴とサンプルコード]を，解説記事として執筆。
 
 ----
 
