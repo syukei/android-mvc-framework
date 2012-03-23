@@ -40,14 +40,17 @@ ver0.2では，MVCフレームワークとしての基本構造が，よりい�
 下記では，これらの特徴を，サンプルコードを引用しつつ詳細に説明する。
 <br>
 
+<hr><br>
+
 = ver0.2の特徴：詳細 =
 
 説明の順番としては，V→C→Mの順に見てゆくのが一番わかりやすい。
 
+<hr><br>
 
 == View層 ==
 
-=== オプションメニューを，気軽に構築可能になった。 ===
+=== ■オプションメニューを，気軽に構築可能になった。 ===
 
 下記のようなコードをActivityに記述して，動的にオプションメニューを構築可能である。
 
@@ -85,11 +88,11 @@ ver0.2では，MVCフレームワークとしての基本構造が，よりい�
 
 ※オプションが選択された時には，Controllerを呼び出し，画面遷移などを実行させている。
 
- 引用元：TopActivity.java
+ 引用元：TopActivity.java<br>
  http://code.google.com/p/android-mvc-framework/source/browse/tags/20120323_ver0.2/src/com/android_mvc/sample_project/activities/main/TopActivity.java
 
 
-=== タブレイアウトを，気軽に実現可能になった。 ===
+=== ■タブレイアウトを，気軽に実現可能になった。 ===
 
 下記のようなコードをActivityに記述して，動的にタブレイアウトを構築可能である。
 
@@ -119,7 +122,7 @@ ver0.2では，MVCフレームワークとしての基本構造が，よりい�
 
 各タブの中には，コンテンツとしてActivityを表示できる。
 
- 引用元：SampleTabHostActivity.java
+ 引用元：SampleTabHostActivity.java<br>
  http://code.google.com/p/android-mvc-framework/source/browse/tags/20120323_ver0.2/src/com/android_mvc/sample_project/activities/func_db/SampleTabHostActivity.java
 
 
@@ -128,7 +131,7 @@ ver0.2では，MVCフレームワークとしての基本構造が，よりい�
 レイアウトXMLに手を加える必要は一切ない。
 
 
-=== 文字列リソースの参照が極めて容易になった。 ===
+=== ■文字列リソースの参照が極めて容易になった。 ===
 
 文字列リソースはRクラスから取得するわけだが，その手間は，もはや手間ではなくなった。
 
@@ -143,7 +146,7 @@ Activity上のサンプルコード：
 このアイデアの着想については，下記のページを参照のこと。
 型安全な方を採用してある。
 
- Androidアプリで，_("リソース名") と書くだけで，簡単に文字列を参照しよう
+ Androidアプリで，_("リソース名") と書くだけで，簡単に文字列を参照しよう<br>
  http://d.hatena.ne.jp/language_and_engineering/20110815/p1
 
 
@@ -155,10 +158,12 @@ View層の便利オブジェクトとして「$」という変数を利用する
 
 「$」は，今後もどんどん便利化していく計画である。
 
+<br><hr><br>
+
 
 == Controller層 ==
 
-=== より柔軟な制御フロー・処理フローを，より明快・簡潔なコードで実現可能になった。 ===
+=== ■より柔軟な制御フロー・処理フローを，より明快・簡潔なコードで実現可能になった。 ===
 
 コントローラ層では，処理フローが下記のように明確化された。
 
@@ -209,7 +214,7 @@ View層の便利オブジェクトとして「$」という変数を利用する
 
 goなら遷移するだけ。goWithDataなら，インテントにデータを詰め込んで運搬できる。
 
- 引用元：MainController.java
+ 引用元：MainController.java<br>
  http://code.google.com/p/android-mvc-framework/source/browse/tags/20120323_ver0.2/src/com/android_mvc/sample_project/controller/MainController.java
 
 
@@ -265,7 +270,7 @@ goなら遷移するだけ。goWithDataなら，インテントにデータを�
     }
 }}}
 
- 引用元：FuncDBController.java
+ 引用元：FuncDBController.java<br>
  http://code.google.com/p/android-mvc-framework/source/browse/tags/20120323_ver0.2/src/com/android_mvc/sample_project/controller/FuncDBController.java
 
 
@@ -313,7 +318,7 @@ goなら遷移するだけ。goWithDataなら，インテントにデータを�
     }
 }}}
 
- 引用元：FuncNetController.java
+ 引用元：FuncNetController.java<br>
  http://code.google.com/p/android-mvc-framework/source/browse/tags/20120323_ver0.2/src/com/android_mvc/sample_project/controller/FuncNetController.java
 
 
@@ -340,7 +345,7 @@ goなら遷移するだけ。goWithDataなら，インテントにデータを�
     }
 }}}
 
- 引用元：HttpNetActivity.java
+ 引用元：HttpNetActivity.java<br>
  http://code.google.com/p/android-mvc-framework/source/browse/tags/20120323_ver0.2/src/com/android_mvc/sample_project/activities/func_net/HttpNetActivity.java
 
 
@@ -349,7 +354,7 @@ goなら遷移するだけ。goWithDataなら，インテントにデータを�
 したがって，その上に記述されるDB操作やHTTP通信などのビジネスロジックは，非同期を意識することなく，全く同期的に（単一スレッドモデルとして）記述できる。
 
 
-=== バリデーション・ロジックが，きわめて簡潔に記述できるようになった。 ===
+=== ■バリデーション・ロジックが，きわめて簡潔に記述できるようになった。 ===
 
 アクティビティ上の値の妥当性を検証するために，ユーザが記述するコードの量が，劇的に減った。
 
@@ -379,7 +384,7 @@ JUnit等でおなじみの，assert系のメソッドを並べるだけでいい
 
 よって，検証処理自体も，検証結果の通知処理も，大幅に実装の手間が減った。
 
- 引用元：FuncDBValidation.java
+ 引用元：FuncDBValidation.java<br>
  http://code.google.com/p/android-mvc-framework/source/browse/tags/20120323_ver0.2/src/com/android_mvc/sample_project/controller/FuncDBValidation.java
 
 
@@ -388,11 +393,11 @@ JUnit等でおなじみの，assert系のメソッドを並べるだけでいい
 
 なお，本機能のアイデアの着想については，下記ページの情報を参照のこと。
 
- 「バリデーション」APIと「単体テスト」APIの類似性，およびそのスタイルが時代と共に洗練される過程の概観
+ 「バリデーション」APIと「単体テスト」APIの類似性，およびそのスタイルが時代と共に洗練される過程の概観<br>
  http://d.hatena.ne.jp/language_and_engineering/20120320/p1
 
 
-=== エンティティを含む任意の自作オブジェクトが，Intent経由で気軽に運搬可能になった。 ===
+=== ■エンティティを含む任意の自作オブジェクトが，Intent経由で気軽に運搬可能になった。 ===
 
 IntentPortable（インテント経由で運搬可能である事を表すためのインタフェース）が導入された。
 
@@ -427,13 +432,13 @@ Activity上で，送られてきたIntentからデータを取り出す側のコ
 もし手動で任意のオブジェクトを格納したい場合は，上述の通り，Router#goWithData などのメソッドを使えばよい。
 
 
- 引用元：DBListActivity.java
+ 引用元：DBListActivity.java<br>
  http://code.google.com/p/android-mvc-framework/source/browse/tags/20120323_ver0.2/src/com/android_mvc/sample_project/activities/func_db/DBListActivity.java
 
 
 本機能の着想については，下記ページの情報を参照のこと。
 
- Android SDKの，ParcelableとSerializableの違いを比較 - Intentで独自オブジェクトを運搬する際，役立つのはどちら？
+ Android SDKの，ParcelableとSerializableの違いを比較 - Intentで独自オブジェクトを運搬する際，役立つのはどちら？<br>
  http://d.hatena.ne.jp/language_and_engineering/20120313/p1
 
 
