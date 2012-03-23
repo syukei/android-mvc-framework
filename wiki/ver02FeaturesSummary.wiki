@@ -1,4 +1,4 @@
-#ver0.2の新機能と改良点
+#ver0.2の新機能と改良点（サンプルコードを満載）
 
 = ver0.2の特徴：概観 =
 
@@ -442,7 +442,158 @@ Activity上で，送られてきたIntentからデータを取り出す側のコ
  http://d.hatena.ne.jp/language_and_engineering/20120313/p1
 
 
+<br><hr><br>
 
+
+== Model層 ==
+
+=== ORMの機能が強化された。CRUDの処理は最初から組み込み済みになった。 ===
+
+RDBの操作は，CRUDのいずれも極めてシンプルかつ明快なコードになった。
+
+下記のサンプルを見れば，一目瞭然であろう。
+
+{{{
+
+    // ------------ C --------------
+
+
+    /**
+     * 1人の友達を保存。
+     */
+    public Friend create(String name, Integer age, Boolean favoriteFlag)
+    {
+        // 論理エンティティを構築
+        Friend f = new Friend();
+        f.setName(name);
+        f.setAge( age );
+        f.setFavorite_flag( favoriteFlag );
+
+        // DB登録
+        f.save(helper);
+
+        return f;
+    }
+
+
+    // ------------ R --------------
+
+
+    /**
+     * 友達を全て新しい順に返す。
+     */
+    public ArrayList<Friend> findAll()
+    {
+        return findAll(helper, Friend.class);
+    }
+
+
+    /**
+     * 特定のIDの友達を１人返す。
+     */
+    public Friend findById(Long friend_id)
+    {
+        return findById( helper, Friend.class, friend_id );
+    }
+
+        // NOTE: 細かい条件で検索したい場合は，Finderを利用すること。
+        // findAllやfindByIdの実装を参照。
+
+
+    // ------------ U --------------
+
+
+    /**
+     * 既存の友達のお気に入り状態を反転させる。
+     */
+    public Friend invertFavoriteFlag( Long friend_id )
+    {
+        // idをもとに検索
+        Friend f = findById( friend_id );
+
+        // フラグを反転する
+        f.setFavorite_flag( ! f.getFavorite_flag() );
+
+        // DB更新
+        f.save(helper);
+
+        return f;
+    }
+
+
+    // ------------ D --------------
+
+
+    /**
+     * 特定のIDの友達を削除。
+     */
+    public void deleteById( Long friend_id )
+    {
+        Friend f = findById(friend_id);
+
+        // DBからの削除を実行
+        f.delete(helper);
+    }
+
+}}}
+
+DAO自体が，findAll() とかfindById()みたいなメソッドを持つようになった。
+
+またエンティティ自体，save()で新規登録と更新の両方が可能になり，delete()メソッドで自身の削除も可能となった。
+
+DB操作のためのユーザのコード記述量は，圧倒的に削減された。
+
+ 引用元：FriendDAO.java<br>
+ http://code.google.com/p/android-mvc-framework/source/browse/tags/20120323_ver0.2/src/com/android_mvc/sample_project/db/dao/FriendDAO.java
+
+
+それだけではなく，SELECT文を発行する際には，細かい条件を指定する事も可能である。
+
+findAll()やfindById()の実装を見ればわかる。
+
+{{{
+    /**
+     * レコードを全て新しい順に返す。
+     */
+    public ArrayList<T> findAll(DBHelper helper, Class<T> entity_class)
+    {
+        // 有効な湯キーを持つ全件を降順に
+        return new Finder<T>(helper)
+            .where("id > 0")
+            .orderBy("id DESC")
+            .findAll(entity_class)
+        ;
+    }
+
+}}}
+
+ユーザは，このコードを模倣して，任意の検索条件を持った検索メソッドを実装可能である。
+
+ 引用元：BaseDAO.java<br>
+ http://code.google.com/p/android-mvc-framework/source/browse/tags/20120323_ver0.2/src/com/android_mvc/framework/db/dao/BaseDAO.java
+
+なお，このFinderオブジェクトの考案にあたっては，Ruby on Rails3のActiveRecordのエンジン「Arel」を意識した。
+
+
+<br><hr><br>
+
+
+== 結び ==
+
+以上が，ver0.2における改良点のサマリである。
+
+M・V・Cの全レイヤについて，DSLが提供され，ユーザのコード記述量が減り，生産性が劇的に向上しているのを分かって頂ける事と思う。
+
+
+<br>
+ver0.1は「MVCの骨組み」であった。
+
+ver0.2は，MVCの構造がよりいっそう強固になり，Androidアプリ開発における「スタンダードな設計方針」を示した。
+<br>
+
+この調子でバージョンアップを重ねていけば，あたかも既存の部品を手早く組み合わせるだけで素早くアプリを完成できるような，魅力的なフレームワークになってゆくのは間違いない。
+
+ぜひ，次バージョンもお楽しみにされたい。
 
 
 
