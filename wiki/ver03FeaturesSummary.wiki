@@ -77,6 +77,10 @@ HTML5と，jQuery Mobileを使ったUI構築のサンプルコードは，下記
  http://code.google.com/p/android-mvc-framework/source/browse/tags/20120730_ver0.3/src/com/android_mvc/sample_project/activities/func_html/SampleJQueryMobileActivity.java
 
 
+本フレームワークのユーザは，用途に応じて，自分の好きなUI実装方法を選んでよい，というわけだ。
+
+
+
 これらの機能を実現するためには，下記のエントリが参考になった。
 
  たった２ファイルで，HTML＋JS製のネイティブAndroidアプリを作る手順　（動作するサンプルコード付き。WebViewの活用方法）<br>
@@ -288,132 +292,157 @@ Android中で取り扱われる位置情報オブジェクトの種類はさま�
 
 == Model層 ==
 
-== ■ORMの機能が強化された。CRUDの処理は最初から組み込み済みになった。 ==
+== ■ ORMで，論理エンティティと物理エンティティの相互変換をスマートに実行するための方式を整備した。 ==
 
-RDBの操作は，CRUDのいずれも極めてシンプルかつ明快なコードになった。
+Javaの世界の論理エンティティを，SQLiteの世界の物理エンティティと相互変換させるための仕組みが強化された。
 
-下記のサンプルを見れば，一目瞭然であろう。
+下記のサンプルコートで，「LPUtil」というユーティリティが果たしている役目に注目されたい。
+
+
+Friend.java
 
 {{{
 
-    // ------------ C --------------
+    // ----- LP変換(Logical <-> Physical) -----
 
 
     /**
-     * 1人の友達を保存。
+     * DBの格納値から論理エンティティを構成
      */
-    public Friend create(String name, Integer age, Boolean favoriteFlag)
+    @Override
+    public Friend logicalFromPhysical(Cursor c)
     {
-        // 論理エンティティを構築
-        Friend f = new Friend();
-        f.setName(name);
-        f.setAge( age );
-        f.setFavorite_flag( favoriteFlag );
+        setId(c.getLong(0));
+        setName(c.getString(1));
+        setAge( c.getInt(2) );
+        setFavorite_flag( LPUtil.decodeIntegerToBoolean( c.getInt(3) ) );
 
-        // DB登録
-        f.save(helper);
-
-        return f;
-    }
-
-
-    // ------------ R --------------
-
-
-    /**
-     * 友達を全て新しい順に返す。
-     */
-    public ArrayList<Friend> findAll()
-    {
-        return findAll(helper, Friend.class);
+        return this;
     }
 
 
     /**
-     * 特定のIDの友達を１人返す。
+     * 自身をDBに新規登録可能なデータ型に変換して返す
      */
-    public Friend findById(Long friend_id)
+    @Override
+    protected ContentValues toPhysicalEntity(ContentValues values)
     {
-        return findById( helper, Friend.class, friend_id );
-    }
+        // entityをContentValueに変換
 
-        // NOTE: 細かい条件で検索したい場合は，Finderを利用すること。
-        // findAllやfindByIdの実装を参照。
+        if( getId() != null)
+        {
+            values.put("id", getId());
+        }
+        values.put("name", getName());
+        values.put("age", getAge());
+        values.put("favorite_flag", LPUtil.encodeBooleanToInteger( getFavorite_flag() ) );
 
-
-    // ------------ U --------------
-
-
-    /**
-     * 既存の友達のお気に入り状態を反転させる。
-     */
-    public Friend invertFavoriteFlag( Long friend_id )
-    {
-        // idをもとに検索
-        Friend f = findById( friend_id );
-
-        // フラグを反転する
-        f.setFavorite_flag( ! f.getFavorite_flag() );
-
-        // DB更新
-        f.save(helper);
-
-        return f;
-    }
-
-
-    // ------------ D --------------
-
-
-    /**
-     * 特定のIDの友達を削除。
-     */
-    public void deleteById( Long friend_id )
-    {
-        Friend f = findById(friend_id);
-
-        // DBからの削除を実行
-        f.delete(helper);
+        return values;
     }
 
 }}}
 
-DAO自体が，findAll() とかfindById()みたいなメソッドを持つようになった。
 
-またエンティティ自体，save()で新規登録と更新の両方が可能になり，delete()メソッドで自身の削除も可能となった。
-
-DB操作のためのユーザのコード記述量は，圧倒的に削減された。
-
- 引用元：FriendDAO.java<br>
- http://code.google.com/p/android-mvc-framework/source/browse/tags/20120323_ver0.2/src/com/android_mvc/sample_project/db/dao/FriendDAO.java
-
-
-それだけではなく，SELECT文を発行する際には，細かい条件を指定する事も可能である。
-
-findAll()やfindById()の実装を見ればわかる。
+LocationLog.java
 
 {{{
+
+    // ----- LP変換(Logical <-> Physical) -----
+
+
     /**
-     * レコードを全て新しい順に返す。
+     * DBの格納値から論理エンティティを構成
      */
-    public ArrayList<T> findAll(DBHelper helper, Class<T> entity_class)
+    @Override
+    public LocationLog logicalFromPhysical(Cursor c)
     {
-        // 有効な湯キーを持つ全件を降順に
-        return new Finder<T>(helper)
+        setId(c.getLong(0));
+        setRecorded_at( LPUtil.decodeTextToCalendar(c.getString(1)) );
+        setLatitude( c.getDouble(2) );
+        setLongitude( c.getDouble(3) );
+        setGeo_str( c.getString(4) );
+
+        return this;
+    }
+
+
+    /**
+     * 自身をDBに新規登録可能なデータ型に変換して返す
+     */
+    @Override
+    protected ContentValues toPhysicalEntity(ContentValues values)
+    {
+        // entityをContentValueに変換
+
+        if( getId() != null)
+        {
+            values.put("id", getId());
+        }
+        values.put("latitude", getLatitude());
+        values.put("longitude", getLongitude());
+        values.put("recorded_at", LPUtil.encodeCalendarToText( getRecorded_at() ));
+        values.put("geo_str", getGeo_str());
+
+        return values;
+    }
+
+}}}
+
+こういった気候が準備されているおかげで，フレームワークのユーザは，Javaの便利なオブジェクトと，SQLiteの少ない型制限との間でギャップに苦しまないで済む。
+
+そのギャップは，フレームワークが埋めてくれるからだ。変換ミスも起きない。
+
+
+なにしろ，SQLiteには，BooleanもDatetimeも存在しないから。
+
+かわりにintegerとtextで代用する必要があるのだ。
+
+そこを透過的にサポートしてくれるツールがあると心強い。
+
+ BaseLPUtil.java<br>
+ http://code.google.com/p/android-mvc-framework/source/browse/tags/20120730_ver0.3/src/com/android_mvc/framework/db/entity/BaseLPUtil.java
+
+
+== ■ RDBの初期状態の定義を簡潔にした。カラムに論理名コメントを付与可能になり，初期データ投入も統合。 ==
+
+これは，スキーマ定義クラスを見ればわかって頂ける事と思う。
+
+ SchemaDefinition.java<br>
+ http://code.google.com/p/android-mvc-framework/source/browse/tags/20120730_ver0.3/src/com/android_mvc/sample_project/db/schema/SchemaDefinition.java
+
+
+== ■ SELECT時にLIMITとOFFSETを指定可能にした。 ==
+
+下記のようなコードが，DAOの基底クラスで標準装備されている。
+
+{{{
+
+    /**
+     * idが最新の１件を取得する。
+     */
+    public T findNewestOne(DBHelper helper, Class<T> entity_class)
+    {
+        List<T> records =  new Finder<T>(helper)
             .where("id > 0")
             .orderBy("id DESC")
+            .offset(1)
+            .limit(1)
             .findAll(entity_class)
         ;
+        if( records.size() > 0 )
+        {
+            return records.get(0);
+        }
+        else
+        {
+            return null;
+        }
     }
 
 }}}
 
-ユーザは，このコードを模倣して，任意の検索条件を持った検索メソッドを実装可能である。
-
- 引用元：BaseDAO.java<br>
- http://code.google.com/p/android-mvc-framework/source/browse/tags/20120323_ver0.2/src/com/android_mvc/framework/db/dao/BaseDAO.java
-
-なお，このFinderオブジェクトの考案にあたっては，Ruby on Rails3のActiveRecordのエンジン「Arel」を意識した。
+ BaseDAO.java<br>
+ http://code.google.com/p/android-mvc-framework/source/browse/tags/20120730_ver0.3/src/com/android_mvc/framework/db/dao/BaseDAO.java
 
 
 <br><hr><br>
@@ -421,20 +450,29 @@ findAll()やfindById()の実装を見ればわかる。
 
 == 結び ==
 
-以上が，ver0.2における改良点のサマリである。
-
-M・V・Cの全レイヤについて，DSLが提供され，ユーザのコード記述量が減り，生産性が劇的に向上しているのを分かって頂ける事と思う。
+以上が，ver0.3における改良点のサマリである。
 
 
-<br>
-ver0.1は「MVCの骨組み」であった。
+今回の目玉を要約すると，
 
-ver0.2は，MVCの構造がよりいっそう強固になり，Androidアプリ開発における「スタンダードな設計方針」を示し，それを理想的な実装コードの形態で具現化した。
-<br>
+ * HTML5 を含む，セレクタブルなUI実装方法。
 
-この調子でバージョンアップを重ねていけば，あたかも既存の部品を手早く組み合わせるだけで素早くアプリを完成できるような，魅力的なフレームワークになってゆくのは間違いない。
+ * MapとGPSが簡単に使えるようになった。
 
-ぜひ，次バージョンも楽しみにして頂きたい。
+ * 常駐サービスのひな型。
+
+という事になる。
+
+
+加えて，M・V・Cの全レイヤについて，細かな点で改良が図られ，実際のアプリケーション開発に役立つ仕掛けが詰め込まれているのが分かるはずだ。
+
+
+本フレームワークは，「スタンダードな設計パターンや開発プロセス」を提唱しつつも，ユーザに対して方式を選択する余地を残している。
+
+ユーザの現実のニーズに応えつつも，ユーザに新たな発想法を提供しようと試みているのである。
+
+
+ver1.0出現の日は，そう遠くない。
 
 
 
