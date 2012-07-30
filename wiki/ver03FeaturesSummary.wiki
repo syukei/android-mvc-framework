@@ -8,11 +8,13 @@
 
  * ver0.2：MVCアーキテクチャの構造を強化し，レイヤ間の連携を容易にした。
 
+<br>
 
 そして今回，ver0.3では，「実用性」を向上させる事に主眼を置いたリリースとなった。
 
  * ver0.3：サンプルアプリ充実，および他ツールの特徴を導入。実用性を向上させた。
 
+<br>
 
 各レイヤごとに，機能面での主な改良点を取り上げる。
 
@@ -50,396 +52,99 @@ ver0.2の時に倣って，V→C→Mの順に見てゆく。
 
 == View層： ==
 
-== ■オプションメニューを，気軽に構築可能になった。 ==
+== ■ UIを，４通りの方法で実装可能になった。HTML5やjQuery Mobile，またJS+CSSなど既存のWeb制作技術を使った画面構築をサポート。 ==
 
-下記のようなコードをActivityに記述して，動的にオプションメニューを構築可能である。
+もともと，従来のレイアウトXMLによる画面描画方法に加えて，UIBuilderクラスを使った手軽なUI構築が可能な造りとなっていた。
 
-{{{
-        // オプションメニューを構築
-        return new OptionMenuBuilder(context)
-            .add(
-                new OptionMenuDescription()
-                {
-                    @Override
-                    protected String displayText() {return "DB登録";}
-
-                    @Override
-                    protected void onSelected() {
-                        // 画面遷移
-                        MainController.submit(activity, "EDIT_DB");
-                    }
-                }
-            )
-            .add(
-                new OptionMenuDescription()
-                {
-                    @Override
-                    protected String displayText() {return "DB閲覧";}
-
-                    @Override
-                    protected void onSelected() {
-                        // 画面遷移
-                        MainController.submit(activity, "VIEW_DB");
-                    }
-                }
-            )
-        ;
-}}}
-
-※オプションが選択された時には，Controllerを呼び出し，画面遷移などを実行させている。
-
- 引用元：TopActivity.java<br>
- http://code.google.com/p/android-mvc-framework/source/browse/tags/20120323_ver0.2/src/com/android_mvc/sample_project/activities/main/TopActivity.java
+この方法は，画面のプロトタイプ構築などの際に威力を発揮することだろう。
 
 
-== ■タブレイアウトを，気軽に実現可能になった。 ==
+今回ver0.3では，他のAndroidアプリ開発フレームワークの特徴を導入した。
 
-下記のようなコードをActivityに記述して，動的にタブレイアウトを構築可能である。
-
-{{{
-        // タブの定義を記述する。
-        new TabHostBuilder(context)
-            .setChildActivities( FuncDBController.getChildActivities(this) )
-            .add(
-                new TabDescription("TAB_EDIT_DB")
-                    .text("DB登録")
-                    .icon(android.R.drawable.ic_menu_add)
-                ,
-
-                new TabDescription("TAB_VIEW_DB")
-                    .text("DB閲覧")
-                    .icon(android.R.drawable.ic_menu_agenda)
-                ,
-
-                new TabDescription("TAB_FUNC_NET")
-                    .text("通信")
-                    .noIcon()
-
-            )
-            .display()
-        ;
-}}}
-
-各タブの中には，コンテンツとしてActivityを表示できる。
-
- 引用元：SampleTabHostActivity.java<br>
- http://code.google.com/p/android-mvc-framework/source/browse/tags/20120323_ver0.2/src/com/android_mvc/sample_project/activities/func_db/SampleTabHostActivity.java
+即ち，<b>HTML5等を使ったUI構築</b>である。
 
 
-つまりView層では，一般のView部品に加えて，メニューやタブも動的に手軽に構築できるようになった。
-
-レイアウトXMLに手を加える必要は一切ない。
+素のHTML4と，JavaScriptとJavaを連携させる仕組みのサンプルコードは，下記を参照。
 
 
-== ■文字列リソースの参照が極めて容易になった。 ==
-
-文字列リソースはRクラスから取得するわけだが，その手間は，もはや手間ではなくなった。
-
-Activity上のサンプルコード：
-
-{{{
-              tv2 = new MTextView(context)
-                .text("このアプリの名称：" + $._(R.string.app_name) )
-                .widthWrapContent()
-}}}
-
-このアイデアの着想については，下記のページを参照のこと。
-型安全な方を採用してある。
-
- Androidアプリで，`_`("リソース名") と書くだけで，簡単に文字列を参照しよう<br>
- http://d.hatena.ne.jp/language_and_engineering/20110815/p1
+ SampleHtmlActivity.java<br>
+ http://code.google.com/p/android-mvc-framework/source/browse/tags/20120730_ver0.3/src/com/android_mvc/sample_project/activities/func_html/SampleHtmlActivity.java
 
 
-なお「$」は，CommonActivityUtilのインスタンスである。
+HTML5と，jQuery Mobileを使ったUI構築のサンプルコードは，下記のアクティビティを参照。
 
-ver0.1では頭文字を取って「cau」という変数名で参照可能だったが，ver0.2ではこのように簡略化された。
+ SampleJQueryMobileActivity.java<br>
+ http://code.google.com/p/android-mvc-framework/source/browse/tags/20120730_ver0.3/src/com/android_mvc/sample_project/activities/func_html/SampleJQueryMobileActivity.java
 
-View層の便利オブジェクトとして「$」という変数を利用する，という習慣は，特にWebアプリケーション開発に携わってきた者であれば，非常に親しみやすいだろう。
 
-「$」は，今後もどんどん便利化していく計画である。
+これらの機能を実現するためには，下記のエントリが参考になった。
+
+ たった２ファイルで，HTML＋JS製のネイティブAndroidアプリを作る手順　（動作するサンプルコード付き。WebViewの活用方法）
+ http://d.hatena.ne.jp/language_and_engineering/20120710/CreateAndroidAppByHtml5JavaScript
+ 
+ AndroidやiOSの「ハイブリッドアプリ」で，JavaScriptとネイティブ・コードが連携する仕組みを図解　（おまけ：HTML側で施すべき，クロスプラットフォーム対策）
+ http://d.hatena.ne.jp/language_and_engineering/20120713/p1
+ 
+ Javaで，匿名クラス内で定義したpublicメソッドの警告が消せず困った話　（静的なJavaと，動的なJavaScriptを連携させるDSLを作りたい）
+ http://d.hatena.ne.jp/language_and_engineering/20120728/AnonymousClassWarnsOnBridgingBetweenJavaAndJS
+
+
+== ■ MapViewの扱いが極めて容易になった。現在地の追跡や，マップ上のアイコン描画をサポート。 ==
+
+MapViewを拡張したMMapViewの作成により，マップアプリの開発工数が劇的に削減される。
+
+マップ上では，自分の現在地を自動的に追跡させる事もできるし，任意の座標にアイコンを描画する事も容易である。
+
+下記が該当するサンプルコード。
+
+ SampleMapActivity.java
+ http://code.google.com/p/android-mvc-framework/source/browse/tags/20120730_ver0.3/src/com/android_mvc/sample_project/activities/func_map/SampleMapActivity.java
+
+
+Mapを利用するためには，Eclipse上でプロジェクトを新規作成する際に，ターゲットとしてGoogle APIを含むようなセットアップが必要である。
+
+また，strings.xmlの中に，自分の取得したGoogle Maps APIのキーを記述しておくことが必要だ。
+
+
+これらの機能を実現するためには，下記のエントリが参考になった。
+
+ Androidアプリで，Google Maps API＋GPS＋Geocoderを使って，現在地の地図と地名を表示させよう
+ http://d.hatena.ne.jp/language_and_engineering/20110828/p1
+ 
+ Androidアプリで，Google Mapsの地図上にアイコン画像を配置し，そのTapイベントに反応するサンプルコード
+ http://d.hatena.ne.jp/language_and_engineering/20110907/p1
+
+
+
+== ■ Viewのアニメーションの連続実行を可能にするようなライブラリを提供。 ==
+
+AndroidのアニメーションAPIには，「連続実行がしづらい」という欠点があった。
+
+しかし，それを解消するような便利なライブラリが提供された。
+
+AnimationDescriptionを列挙するだけで，時系列にアニメーションが実行されるのである。
+
+ SampleAnimationActivity.java
+ http://code.google.com/p/android-mvc-framework/source/browse/tags/20120730_ver0.3/src/com/android_mvc/sample_project/activities/func_visual/SampleAnimationActivity.java
+
+この機能を実現するためには，下記のエントリが役立った。
+
+ Androidで，複数のAnimationを「順番に」実行するためのライブラリ　（XMLを使わずに「連続した動きの変化」を指定し，逐次実行するDSL）
+ http://d.hatena.ne.jp/language_and_engineering/20120416/AndroidAnimationSetSequentialDSL
+ 
+ Androidで，「ビットマップのピクセル操作」をリアルタイムに実行するサンプルコード
+ http://d.hatena.ne.jp/language_and_engineering/20120626/AndroidManipulateBitmapPixels
+
+ただし，本機能には限界もある。利用時には，１個のViewに対する操作にとどめられたい。
+
 
 <br><hr><br>
 
 
 == Controller層： ==
 
-== ■より柔軟な制御フロー・処理フローを，より明快・簡潔なコードで実現可能になった。 ==
 
-コントローラ層では，処理フローが下記のように明確化された。
 
- * もし必要なら，Activityから受け取った値の *バリデーション。*
-
- * もしバリデーションを通過すれば， *ビジネスロジック（Action）* を実行。
-
- * ビジネスロジックの実行が完了したら，実行結果に基づいて， *遷移先の画面へルーティング。*
-
- * 最後に， *UI上で後処理* を実行。
-<br>
-
-これが，コントローラ層の要となるフローである。
-
-もちろん，複雑な処理が無い場合は，ただ単に「Intentにデータを詰めて画面遷移するだけ」というのも可能。
-<br>
-
-サンプルを掲載する。
-
-まずは，単純に画面遷移するだけのコード。Routerクラスが活躍する。
-
-{{{
-    /**
-     * TOP画面からの遷移時
-     */
-    public static void submit(TopActivity activity, String button_type) {
-        if( "EDIT_DB".equals(button_type) )
-        {
-            // 編集画面へ
-            Router.goWithData(activity, DBEditActivity.class,
-                new Intent().putExtra("hoge", "Intentで値を渡すテスト").putExtra("fuga", 1)
-            );
-        }
-        else
-        if( "VIEW_DB".equals(button_type) )
-        {
-            // 一覧画面へ
-            Router.go(activity, DBListActivity.class);
-        }
-        else
-        if( "TAB_SAMPLE".equals(button_type) )
-        {
-            // タブ画面へ
-            Router.go(activity, SampleTabHostActivity.class);
-        }
-    }
-}}}
-
-goなら遷移するだけ。goWithDataなら，インテントにデータを詰め込んで運搬できる。
-
- 引用元：MainController.java<br>
- http://code.google.com/p/android-mvc-framework/source/browse/tags/20120323_ver0.2/src/com/android_mvc/sample_project/controller/MainController.java
-
-
-次に，バリデーション＋ビジネスロジック＋ルーティング＋UI後処理　というフローをフルに活用しているサンプルを掲載する。
-
-{{{
-    /**
-     * DB登録画面からの遷移時
-     */
-    public static void submit(final DBEditActivity activity)
-    {
-        new ControlFlowDetail<DBEditActivity>( activity )
-            .setValidation( new ValidationExecutor(){
-                @Override
-                public ValidationResult doValidate()
-                {
-                    // バリデーション処理
-                    return new FuncDBValidation().validate( activity );
-                }
-
-                @Override
-                public void onValidationFailed()
-                {
-                    showErrMessages();
-
-                    // バリデーション失敗時の遷移先
-                    //goOnValidationFailed( DBEditActivity.class );
-                    stayInThisPage();
-                }
-            })
-            .setBL( new BLExecutor(){
-                @Override
-                public ActionResult doAction()
-                {
-                    // BL
-                    return new DBEditAction( activity ).exec();
-                }
-            })
-            .onBLExecuted(
-                // BL実行後の遷移先の一覧
-                new RoutingTable().map("success", DBListActivity.class )
-
-                // onBLExecutedにこれを渡せば，BLの実行結果にかかわらず画面遷移を常に抑止。
-                //STAY_THIS_PAGE_ALWAYS
-
-                // BL実行結果が特定の状況のときのみ，画面遷移を抑止することも可能。
-                //new RoutingTable().map("success", STAY_THIS_PAGE )
-
-            )
-            .startControl();
-        ;
-
-    }
-}}}
-
- 引用元：FuncDBController.java<br>
- http://code.google.com/p/android-mvc-framework/source/browse/tags/20120323_ver0.2/src/com/android_mvc/sample_project/controller/FuncDBController.java
-
-
-バリデーションは行なわないで済ませる，等の柔軟な書き変えも可能。
-
-{{{
-    /**
-     * HTTP通信画面からの遷移時
-     */
-    public static void submit(final HttpNetActivity activity)
-    {
-        new ControlFlowDetail<HttpNetActivity>( activity )
-            .setValidation( new ValidationExecutor(){
-                @Override
-                public ValidationResult doValidate()
-                {
-                    // バリデーション処理
-                    return new FuncNetValidation().validate( activity );
-                }
-
-                @Override
-                public void onValidationFailed()
-                {
-                    showErrMessages();
-
-                    // バリデーション失敗時の遷移先
-                    stayInThisPage();
-                }
-            })
-            .setBL( new BLExecutor(){
-                @Override
-                public ActionResult doAction()
-                {
-                    // BL
-                    return new HttpNetAction( activity ).exec();
-                }
-            })
-            .onBLExecuted(
-                // BL実行後の遷移先
-                STAY_THIS_PAGE_ALWAYS
-            )
-            .startControl();
-        ;
-
-    }
-}}}
-
- 引用元：FuncNetController.java<br>
- http://code.google.com/p/android-mvc-framework/source/browse/tags/20120323_ver0.2/src/com/android_mvc/sample_project/controller/FuncNetController.java
-
-
-もし，ビジネスロジックを実行した後で，その結果を参照しつつUI操作を実行したい場合は，Activity側に下記のようなメソッドを置くだけで実行される。
-
-ここでは，HTTP通信ロジックの処理結果を参照している。
-
-{{{
-    @Override
-    public void afterBLExecuted(ActionResult ares)
-    {
-        UIUtil.longToast(this, "通信処理が完了しました。");
-
-        // 通信の結果を表示
-        HttpPostResponse response = (HttpPostResponse)ares.get("http_response");
-        if( response.isSuccess() )
-        {
-            tv2.setText( response.getText() );
-        }
-        else
-        {
-            tv2.setText( response.getErrMsg() );
-        }
-    }
-}}}
-
- 引用元：HttpNetActivity.java<br>
- http://code.google.com/p/android-mvc-framework/source/browse/tags/20120323_ver0.2/src/com/android_mvc/sample_project/activities/func_net/HttpNetActivity.java
-
-
-なお，コントローラの処理フローは，UIスレッドとは別のスレッド上で非同期で行なわれる。
-
-したがって，その上に記述されるDB操作やHTTP通信などのビジネスロジックは，非同期を意識することなく，全く同期的に（単一スレッドモデルとして）記述できる。
-
-
-== ■バリデーション・ロジックが，きわめて簡潔に記述できるようになった。 ==
-
-アクティビティ上の値の妥当性を検証するために，ユーザが記述するコードの量が，劇的に減った。
-
-{{{
-    /**
-     * DB登録画面での入力値を検証
-     */
-    public ValidationResult validate(DBEditActivity activity)
-    {
-        initValidationOf(activity);
-
-        assertNotEmpty("name");
-
-        assertNotEmpty("age");
-        assertValidInteger("age");
-        assertNumberOperation("age", greaterThan(0));
-
-        return getValidationResult();
-    }
-}}}
-
-JUnit等でおなじみの，assert系のメソッドを並べるだけでいい。
-
-このようにバリデーションメソッドが共通化された結果，
-
-「○○は△△で入力してください。」のようなエラーメッセージは，フレームワーク内部で自動的に構築される事になった。
-
-よって，検証処理自体も，検証結果の通知処理も，大幅に実装の手間が減った。
-
- 引用元：FuncDBValidation.java<br>
- http://code.google.com/p/android-mvc-framework/source/browse/tags/20120323_ver0.2/src/com/android_mvc/sample_project/controller/FuncDBValidation.java
-
-
-ユーザが自由にバリデーションメソッドを追加する事も可能である。
-
-
-なお，本機能のアイデアの着想については，下記ページの情報を参照のこと。
-
- 「バリデーション」APIと「単体テスト」APIの類似性，およびそのスタイルが時代と共に洗練される過程の概観<br>
- http://d.hatena.ne.jp/language_and_engineering/20120320/p1
-
-
-== ■エンティティを含む任意の自作オブジェクトが，Intent経由で気軽に運搬可能になった。 ==
-
-IntentPortable（インテント経由で運搬可能である事を表すためのインタフェース）が導入された。
-
-ユーザは任意のオブジェクトに対して，「implements IntentPortable」するだけで，そのオブジェクトをIntent経由で運搬可能になる。
-
-エンティティやバリデーション結果など，フレームワーク内の主要なオブジェクトは，自動的に「IntentPortable」になる。
-
-その結果，画面連携の負担が大幅に削減される。
-<br>
-
-下記にサンプルコードを掲載する。
-
-
-Activity上で，送られてきたIntentからデータを取り出す側のコード：
-
-{{{
-        if( $.actionResultHasKey( "new_friend_obj" ) )
-        {
-            // Intentから情報を取得
-            Friend f = (Friend)($.getActionResult().get("new_friend_obj"));
-
-            // UIに表示
-            tv2.text(f.getName() + "さんが，たった今新規登録されました。").visible();
-        }
-}}}
-
-ビジネスロジックの実行結果やバリデーションの実行結果は，遷移先の画面に向かう際に，自動的にIntentの中に格納される。
-
-つまり，処理の結果を遷移先の画面に運搬したい場合，ビジネスロジックの実行結果（ActionResultオブジェクト）に詰め込んでおけばよい。
-ということになる。
-
-もし手動で任意のオブジェクトを格納したい場合は，上述の通り，Router#goWithData などのメソッドを使えばよい。
-
-
- 引用元：DBListActivity.java<br>
- http://code.google.com/p/android-mvc-framework/source/browse/tags/20120323_ver0.2/src/com/android_mvc/sample_project/activities/func_db/DBListActivity.java
-
-
-本機能の着想については，下記ページの情報を参照のこと。
-
- Android SDKの，ParcelableとSerializableの違いを比較 - Intentで独自オブジェクトを運搬する際，役立つのはどちら？<br>
- http://d.hatena.ne.jp/language_and_engineering/20120313/p1
 
 
 <br><hr><br>
