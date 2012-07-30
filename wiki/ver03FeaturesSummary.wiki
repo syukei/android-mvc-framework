@@ -10,7 +10,7 @@
 
 <br>
 
-そして今回，ver0.3では，「実用性」を向上させる事に主眼を置いたリリースとなった。
+そして今回，ver0.3では，<b>「実用性」を向上させる</b>事に主眼を置いたリリースとなった。
 
  * ver0.3：サンプルアプリ充実，および他ツールの特徴を導入。実用性を向上させた。
 
@@ -79,13 +79,13 @@ HTML5と，jQuery Mobileを使ったUI構築のサンプルコードは，下記
 
 これらの機能を実現するためには，下記のエントリが参考になった。
 
- たった２ファイルで，HTML＋JS製のネイティブAndroidアプリを作る手順　（動作するサンプルコード付き。WebViewの活用方法）
+ たった２ファイルで，HTML＋JS製のネイティブAndroidアプリを作る手順　（動作するサンプルコード付き。WebViewの活用方法）<br>
  http://d.hatena.ne.jp/language_and_engineering/20120710/CreateAndroidAppByHtml5JavaScript
  
- AndroidやiOSの「ハイブリッドアプリ」で，JavaScriptとネイティブ・コードが連携する仕組みを図解　（おまけ：HTML側で施すべき，クロスプラットフォーム対策）
+ AndroidやiOSの「ハイブリッドアプリ」で，JavaScriptとネイティブ・コードが連携する仕組みを図解　（おまけ：HTML側で施すべき，クロスプラットフォーム対策）<br>
  http://d.hatena.ne.jp/language_and_engineering/20120713/p1
  
- Javaで，匿名クラス内で定義したpublicメソッドの警告が消せず困った話　（静的なJavaと，動的なJavaScriptを連携させるDSLを作りたい）
+ Javaで，匿名クラス内で定義したpublicメソッドの警告が消せず困った話　（静的なJavaと，動的なJavaScriptを連携させるDSLを作りたい）<br>
  http://d.hatena.ne.jp/language_and_engineering/20120728/AnonymousClassWarnsOnBridgingBetweenJavaAndJS
 
 
@@ -97,7 +97,7 @@ MapViewを拡張したMMapViewの作成により，マップアプリの開発�
 
 下記が該当するサンプルコード。
 
- SampleMapActivity.java
+ SampleMapActivity.java<br>
  http://code.google.com/p/android-mvc-framework/source/browse/tags/20120730_ver0.3/src/com/android_mvc/sample_project/activities/func_map/SampleMapActivity.java
 
 
@@ -108,10 +108,10 @@ Mapを利用するためには，Eclipse上でプロジェクトを新規作成�
 
 これらの機能を実現するためには，下記のエントリが参考になった。
 
- Androidアプリで，Google Maps API＋GPS＋Geocoderを使って，現在地の地図と地名を表示させよう
+ Androidアプリで，Google Maps API＋GPS＋Geocoderを使って，現在地の地図と地名を表示させよう<br>
  http://d.hatena.ne.jp/language_and_engineering/20110828/p1
  
- Androidアプリで，Google Mapsの地図上にアイコン画像を配置し，そのTapイベントに反応するサンプルコード
+ Androidアプリで，Google Mapsの地図上にアイコン画像を配置し，そのTapイベントに反応するサンプルコード<br>
  http://d.hatena.ne.jp/language_and_engineering/20110907/p1
 
 
@@ -124,15 +124,15 @@ AndroidのアニメーションAPIには，「連続実行がしづらい」と�
 
 AnimationDescriptionを列挙するだけで，時系列にアニメーションが実行されるのである。
 
- SampleAnimationActivity.java
+ SampleAnimationActivity.java<br>
  http://code.google.com/p/android-mvc-framework/source/browse/tags/20120730_ver0.3/src/com/android_mvc/sample_project/activities/func_visual/SampleAnimationActivity.java
 
 この機能を実現するためには，下記のエントリが役立った。
 
- Androidで，複数のAnimationを「順番に」実行するためのライブラリ　（XMLを使わずに「連続した動きの変化」を指定し，逐次実行するDSL）
+ Androidで，複数のAnimationを「順番に」実行するためのライブラリ　（XMLを使わずに「連続した動きの変化」を指定し，逐次実行するDSL）<br>
  http://d.hatena.ne.jp/language_and_engineering/20120416/AndroidAnimationSetSequentialDSL
  
- Androidで，「ビットマップのピクセル操作」をリアルタイムに実行するサンプルコード
+ Androidで，「ビットマップのピクセル操作」をリアルタイムに実行するサンプルコード<br>
  http://d.hatena.ne.jp/language_and_engineering/20120626/AndroidManipulateBitmapPixels
 
 ただし，本機能には限界もある。利用時には，１個のViewに対する操作にとどめられたい。
@@ -143,8 +143,144 @@ AnimationDescriptionを列挙するだけで，時系列にアニメーション
 
 == Controller層： ==
 
+== ■ サービス（バッチ）で，定期的にタスクを実行するような常駐型の仕組みを容易に実現可能になった。 ==
+
+処理の実行間隔と，処理の実行内容さえ指定すれば，もうそれで常駐型のサービスの出来上がりである。
+
+ SamplePeriodicService.java<br>
+ http://code.google.com/p/android-mvc-framework/source/browse/tags/20120730_ver0.3/src/com/android_mvc/sample_project/bat/SamplePeriodicService.java
 
 
+== ■ 端末ブート時に起動するサービスも容易に実現可能になった。 ==
+
+マニフェストXML中にも指定が必要だが，ブート時に行なうべきことの記述は極めて少なくて済むようになっている。
+
+ OnBootReceiver.java<br>
+ http://code.google.com/p/android-mvc-framework/source/browse/tags/20120730_ver0.3/src/com/android_mvc/sample_project/bat/OnBootReceiver.java
+
+
+なお，これらサービス関連の機能を実現するにあたり，下記のエントリが役立った。
+
+ Androidで，自動起動する常駐型サービスのサンプルコード　（アプリの裏側で定期的にバッチ処理）<br>
+ http://d.hatena.ne.jp/language_and_engineering/20120724/AndroidAutoStartingResidentServiceBatch
+
+
+== ■ 複数の非同期タスクを逐次的に連続実行する際，イベント駆動型のタスクも実行できるようになった。 ==
+
+この部分は，本フレームワークの全ての要とも言える。
+
+非同期で複雑なマルチスレッドの連続した処理を，まるでシングルスレッドでもあるかのように，逐次的に記述できるのだ。
+
+
+今までは，AsyncTasksRunnerに渡されるSequentialAsynkTaskクラスは，ただ単に「重い処理を別スレッドで逐次的に実行するための手段」でしかなかった。
+
+しかし，今回からはここにイベント駆動型の「SequentialEventTask」が加わった。
+
+ SequentialEventTask.java<br>
+ http://code.google.com/p/android-mvc-framework/source/browse/tags/20120730_ver0.3/src/com/android_mvc/framework/task/SequentialEventTask.java
+
+特定のイベントの発火を待つような場合，逐次的な処理はいったん途切れることになる。
+
+イベントリスナをimplementしつつ，本イベントタスクをextendすれば，逐次的に取り扱い可能なイベントクラスが作成可能になる。
+
+つまり，イベントの処理結果を次の非同期タスクに容易に渡す事ができる，ということだ。
+
+
+
+== ■  GPSで現在地を取得する処理を容易に実現可能になった。位置情報の変換ユーティリティ付き。 ==
+
+GPS情報の取得タスクは，前項で言及したイベントタスクとして実装されている。
+
+Android中で取り扱われる位置情報オブジェクトの種類はさまざまなので，それらを相互に変換するユーティリティも付属している。
+
+ GetMyLocationEventTask.java<br>
+ http://code.google.com/p/android-mvc-framework/source/browse/tags/20120730_ver0.3/src/com/android_mvc/framework/gps/GetMyLocationEventTask.java
+ 
+ LocationUtil.java
+ http://code.google.com/p/android-mvc-framework/source/browse/tags/20120730_ver0.3/src/com/android_mvc/framework/gps/LocationUtil.java
+
+
+== ■  コントロールフローをより簡潔にカスタマイズ可能に。ダイアログの文言や，BLを介さない画面遷移など。 ==
+
+コントローラ上で，BLを介さない画面遷移を非常に簡潔に記述できるようになった。
+
+サンプルコードを記載する。
+
+{{{
+
+    /**
+     * TOP画面からの遷移時
+     */
+    public static void submit(TopActivity activity, String button_type) {
+
+        // 送られてきたボタンタイプに応じて，遷移先を振り分ける。
+
+        // extra付きの遷移を実行
+        if( "EDIT_DB".equals(button_type) )
+        {
+            Router.goWithData(activity, DBEditActivity.class, "DB編集画面へ",
+                new Intent().putExtra("hoge", "Intentで値を渡すテスト").putExtra("fuga", 1)
+            );
+        }
+        else
+        {
+            // extraのない遷移を実行
+            Router.goByRoutingTable(activity, button_type,
+                new RoutingTable()
+                    .map("VIEW_DB",       DBListActivity.class,             "DB一覧画面へ")
+                    .map("TAB_SAMPLE",    SampleTabHostActivity.class,      "タブ画面へ")
+                    .map("MAP_SAMPLE",    SampleMapActivity.class,          "マップ画面へ")
+                    .map("HTML_SAMPLE",   SampleHtmlActivity.class,         "HTMLのサンプル画面へ")
+                    .map("JQUERY_SAMPLE", SampleJQueryMobileActivity.class, "jQuery Mobileのサンプル画面へ")
+                    .map("ANIM_SAMPLE",   SampleAnimationActivity.class,    "アニメーションのサンプル画面へ")
+            );
+        }
+
+/*
+    NOTE: 下記のように書くのと同じ。
+
+        if( "VIEW_DB".equals(button_type) )
+        {
+            // 一覧画面へ
+            Router.go(activity, DBListActivity.class);
+        }
+        if( "TAB_SAMPLE".equals(button_type) )
+        {
+            // タブ画面へ
+            Router.go(activity, SampleTabHostActivity.class);
+        }
+        if( "MAP_SAMPLE".equals(button_type) )
+        {
+            // マップ画面へ
+            Router.go(activity, SampleMapActivity.class);
+        }
+        if( "HTML_SAMPLE".equals(button_type) )
+        {
+            // HTMLのサンプル画面へ
+            Router.go(activity, SampleHtmlActivity.class);
+        }
+        if( "JQUERY_SAMPLE".equals(button_type) )
+        {
+            // jQuery Mobileのサンプル画面へ
+            Router.go(activity, SampleJQueryMobileActivity.class);
+        }
+        if( "ANIM_SAMPLE".equals(button_type) )
+        {
+            // アニメーションのサンプル画面へ
+            Router.go(activity, SampleAnimationActivity.class);
+        }
+*/
+
+    }
+
+}}}
+
+要は，RoutingTableの利用可能局面が増えたのである。
+
+ MainController.java<br>
+ http://code.google.com/p/android-mvc-framework/source/browse/tags/20120730_ver0.3/src/com/android_mvc/sample_project/controller/MainController.java
+
+また，ControlFlowDetailが流れる間のダイアログの文言も設定可能になった。
 
 
 <br><hr><br>
