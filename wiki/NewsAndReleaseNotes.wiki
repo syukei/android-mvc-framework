@@ -9,6 +9,15 @@
 
 ----
 
+2012/07/30 (Mon)
+
+ * バージョン0.3をリリースし，本サイト上でソースコードを公開完了。
+ * ver0.3をSVN上でタグ付け完了。
+   * http://code.google.com/p/android-mvc-framework/source/browse/tags/20120730_ver0.3/
+   * [ver03FeaturesSummary ver0.3の特徴とサンプルコード]を，解説記事として執筆。
+
+----
+
 2012/03/23 (Fri)
 
  * バージョン0.2をリリースし，本サイト上でソースコードを公開完了。
