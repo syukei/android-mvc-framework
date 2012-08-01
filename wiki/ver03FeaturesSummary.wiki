@@ -86,6 +86,9 @@ HTML5と，jQuery Mobileを使ったUI構築のサンプルコードは，下記
  たった２ファイルで，HTML＋JS製のネイティブAndroidアプリを作る手順　（動作するサンプルコード付き。WebViewの活用方法）<br>
  http://d.hatena.ne.jp/language_and_engineering/20120710/CreateAndroidAppByHtml5JavaScript
  
+ jQuery Mobile と HTML5 で、Androidのネイティブアプリを作成する手順
+ http://d.hatena.ne.jp/language_and_engineering/20120717/CreateAndroidNativeAppsByJQueryMobile
+ 
  AndroidやiOSの「ハイブリッドアプリ」で，JavaScriptとネイティブ・コードが連携する仕組みを図解　（おまけ：HTML側で施すべき，クロスプラットフォーム対策）<br>
  http://d.hatena.ne.jp/language_and_engineering/20120713/p1
  
