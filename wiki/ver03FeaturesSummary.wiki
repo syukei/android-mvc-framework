@@ -86,7 +86,7 @@ HTML5と，jQuery Mobileを使ったUI構築のサンプルコードは，下記
  たった２ファイルで，HTML＋JS製のネイティブAndroidアプリを作る手順　（動作するサンプルコード付き。WebViewの活用方法）<br>
  http://d.hatena.ne.jp/language_and_engineering/20120710/CreateAndroidAppByHtml5JavaScript
  
- jQuery Mobile と HTML5 で、Androidのネイティブアプリを作成する手順
+ jQuery Mobile と HTML5 で、Androidのネイティブアプリを作成する手順<br>
  http://d.hatena.ne.jp/language_and_engineering/20120717/CreateAndroidNativeAppsByJQueryMobile
  
  AndroidやiOSの「ハイブリッドアプリ」で，JavaScriptとネイティブ・コードが連携する仕組みを図解　（おまけ：HTML側で施すべき，クロスプラットフォーム対策）<br>
@@ -203,7 +203,7 @@ Android中で取り扱われる位置情報オブジェクトの種類はさま�
  GetMyLocationEventTask.java<br>
  http://code.google.com/p/android-mvc-framework/source/browse/tags/20120730_ver0.3/src/com/android_mvc/framework/gps/GetMyLocationEventTask.java
  
- LocationUtil.java
+ LocationUtil.java<br>
  http://code.google.com/p/android-mvc-framework/source/browse/tags/20120730_ver0.3/src/com/android_mvc/framework/gps/LocationUtil.java
 
 
