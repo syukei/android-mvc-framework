@@ -505,4 +505,14 @@ ver1.0出現の日は，そう遠くない。
 
 
 
+<br><hr><br>
+
+== 補足 ==
+
+ver0.3のJavaDocを，オンラインで閲覧できるように公開した。
+
+http://android-mvc-framework.googlecode.com/svn/tags/20120730_ver0.3/doc/index.html
+
+
+
 　
