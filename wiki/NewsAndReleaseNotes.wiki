@@ -9,6 +9,13 @@
 
 ----
 
+2012/11/30 (Fri)
+
+ * バージョン0.3のJavaDocを，オンラインで閲覧できるように公開。
+   * http://android-mvc-framework.googlecode.com/svn/tags/20120730_ver0.3/doc/index.html
+
+----
+
 2012/07/30 (Mon)
 
  * バージョン0.3をリリースし，本サイト上でソースコードを公開完了。
